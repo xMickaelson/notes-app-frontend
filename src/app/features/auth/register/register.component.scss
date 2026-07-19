@@ -1,0 +1,31 @@
+.login-container {
+  height: 100vh;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background: #f5f7fa;
+}
+
+p-card {
+  width: 420px;
+}
+
+.field {
+  margin-top: 2rem;
+}
+
+.w-full {
+  width: 100%;
+
+  margin-top: 2rem;
+}
+
+.register-link {
+  margin-top: 2rem;
+
+  text-align: center;
+}

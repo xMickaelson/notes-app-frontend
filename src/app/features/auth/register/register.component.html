@@ -1,0 +1,45 @@
+<div class="login-container">
+  <p-card>
+    <h2>{{ "registrationComponent.register" | translate }}</h2>
+
+    <form [formGroup]="registrationForm" (ngSubmit)="register()">
+      <div class="field">
+        <p-floatlabel>
+          <input pInputText id="name" formControlName="name" />
+          <label for="name">
+            {{ "registrationComponent.name" | translate }}
+          </label>
+        </p-floatlabel>
+      </div>
+      <div class="field">
+        <p-floatlabel>
+          <input pInputText id="email" formControlName="email" />
+          <label for="email">
+            {{ "registrationComponent.email" | translate }}
+          </label>
+        </p-floatlabel>
+      </div>
+      <div class="field">
+        <p-floatlabel>
+          <input pInputType id="password" formControlName="password" />
+          <label for="password">
+            {{ "registrationComponent.password" | translate }}
+          </label>
+        </p-floatlabel>
+      </div>
+      <button
+        pButton
+        type="submit"
+        [loading]="loading"
+        label="Register"
+        class="w-full"
+      ></button>
+    </form>
+    <div class="register-link">
+      {{ "registrationComponent.alreadyUser" | translate }}
+      <a routerLink="/register">
+        {{ "registrationComponent.login" | translate }}
+      </a>
+    </div>
+  </p-card>
+</div>

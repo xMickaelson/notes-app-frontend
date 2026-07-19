@@ -1,0 +1,13 @@
+<nav class="breadcrumb">
+  @if (breadcrumbs$ | async; as breadcrumbs) {
+    @for (item of breadcrumbs; track item.url) {
+      <a [routerLink]="item.url">
+        {{ item.label }}
+      </a>
+
+      @if (!$last) {
+        <i class="pi pi-angle-right"></i>
+      }
+    }
+  }
+</nav>

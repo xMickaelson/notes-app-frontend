@@ -1,0 +1,10 @@
+<div class="grid">
+  @for (note of notes; track note.id) {
+    <app-note-card
+      [note]="note"
+      (edit)="edit.emit($event)"
+      (delete)="delete.emit($event)"
+      (archive)="archive.emit($event)"
+    ></app-note-card>
+  }
+</div>

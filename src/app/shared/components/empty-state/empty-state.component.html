@@ -1,0 +1,13 @@
+<div class="empty-state">
+  <i class="pi pi-file empty-icon"></i>
+
+  <h2>{{ title }}</h2>
+  <p>{{ description }}</p>
+
+  <button
+    pButton
+    [label]="buttonLabel"
+    icon="pi pi-plus"
+    (click)="action.emit()"
+  ></button>
+</div>

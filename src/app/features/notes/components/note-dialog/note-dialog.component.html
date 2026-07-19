@@ -1,0 +1,34 @@
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [style]="{ width: '500px' }"
+  [header]="note ? 'Edit Note' : 'Create Note'"
+>
+  <form [formGroup]="form">
+    <div class="field">
+      <label>Title</label>
+      <input pInputText formControlName="title" />
+    </div>
+
+    <div class="field">
+      <label>Content</label>
+      <textarea pTextarea rows="8" formControlName="content"></textarea>
+    </div>
+
+    <div class="footer">
+      <button
+        pButton
+        severity="secondary"
+        label="Cancel"
+        (click)="visible = false"
+      ></button>
+
+      <button
+        pButton
+        label="Save"
+        [disabled]="form.invalid"
+        (click)="onSave()"
+      ></button>
+    </div>
+  </form>
+</p-dialog>

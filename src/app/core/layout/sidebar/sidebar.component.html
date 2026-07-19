@@ -1,0 +1,38 @@
+<div class="sidebar">
+  <div class="logo">
+    {{ "layoutComponent.sidebarComponent.notes" | translate }}
+  </div>
+
+  <nav>
+    @for (value of menuItems; track value.route) {
+      <a [routerLink]="value.route" routerLinkActive="active">
+        <i [class]="value.icon">
+          <span>{{ value.label }}</span>
+        </i>
+      </a>
+    }
+  </nav>
+</div>
+
+<!-- <div class="sidebar">
+  <h2></h2>
+  <a routerLink="/app/dashboard" routerLinkActive="active">
+    <i class="pi pi-home"></i>
+    {{ "layoutComponent.sidebarComponent.dashboard" | translate }}
+  </a>
+
+  <a routerLink="/app/notes" routerLinkActive="active">
+    <i class="pi pi-book"></i>
+    {{ "layoutComponent.sidebarComponent.myNotes" | translate }}
+  </a>
+
+  <a routerLink="/app/archive" routerLinkActive="active">
+    <i class="pi pi-inbox"></i>
+    {{ "layoutComponent.sidebarComponent.archive" | translate }}
+  </a>
+
+  <a routerLink="/app/trash" routerLinkActive="active">
+    <i class="pi pi-trash"></i>
+    {{ "layoutComponent.sidebarComponent.trash" | translate }}
+  </a>
+</div> -->

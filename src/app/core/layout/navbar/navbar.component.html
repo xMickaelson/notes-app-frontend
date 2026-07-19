@@ -1,0 +1,31 @@
+<div class="navbar">
+  <div class="search">
+    <i class="pi pi-search"></i>
+
+    <input
+      pInputText
+      [placeholder]="'layoutComponent.navBarComponent.searchNotes' | translate"
+    />
+  </div>
+
+  <div class="actions">
+    <!-- <button
+      pButton
+      type="button"
+      icon="pi pi-bell"
+      severity="secondary"
+      text
+      rounded
+    ></button> -->
+
+    <p-avatar
+      [label]="userInitial"
+      shape="circle"
+      styleClass="cursor-pointer"
+      (click)="menu.toggle($event)"
+    >
+    </p-avatar>
+
+    <p-menu #menu [popup]="true" [model]="menuItems"> </p-menu>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="login-container">
+  <p-card>
+    <h2>{{ "loginComponent.welcomeBack" | translate }}</h2>
+    <p>{{ "loginComponent.loginToContinue" | translate }}</p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <div class="field">
+        <p-floatlabel>
+          <input pInputText id="email" formControlName="email" />
+          <label for="email">
+            {{ "loginComponent.email" | translate }}
+          </label>
+        </p-floatlabel>
+      </div>
+      <div class="field">
+        <p-floatlabel>
+          <p-password
+            formControlName="password"
+            inputId="password"
+            [feedback]="false"
+          />
+          <label for="password">
+            {{ "loginComponent.password" | translate }}
+          </label>
+        </p-floatlabel>
+      </div>
+      <button
+        pButton
+        type="submit"
+        [loading]="loading"
+        label="Login"
+        class="w-full"
+      ></button>
+    </form>
+    <div class="register-link">
+      {{ "loginComponent.signUp" | translate }}
+
+      <a routerLink="/register">
+        {{ "loginComponent.register" | translate }}
+      </a>
+    </div>
+  </p-card>
+</div>

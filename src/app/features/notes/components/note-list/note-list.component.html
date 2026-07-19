@@ -1,0 +1,44 @@
+<app-note-toolbar
+  [searchControl]="searchControl"
+  (createClicked)="openCreateDialog()"
+>
+</app-note-toolbar>
+
+@if (loading) {
+  <div class="grid">
+    @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+      <app-note-skeleton />
+    }
+  </div>
+} @else if (hasError) {
+  <app-error-state
+    [title]="'errorState.title' | translate"
+    [description]="'errorState.description' | translate"
+    [buttonLabel]="'errorState.retry' | translate"
+    (retry)="loadNotes()"
+  >
+  </app-error-state>
+} @else if (notes.length === 0) {
+  <app-empty-state
+    [title]="'emptyState.title' | translate"
+    [description]="'emptyState.description' | translate"
+    [buttonLabel]="'emptyState.buttonLabel' | translate"
+    (action)="openCreateDialog()"
+  >
+  </app-empty-state>
+} @else {
+  <app-note-grid
+    [notes]="notes"
+    (edit)="editNote($event)"
+    (delete)="deleteNote($event)"
+    (archive)="archiveNote($event)"
+  >
+  </app-note-grid>
+}
+
+<app-note-dialog
+  [(visible)]="dialogVisible"
+  [note]="selectedNote"
+  (save)="saveNote($event)"
+>
+</app-note-dialog>

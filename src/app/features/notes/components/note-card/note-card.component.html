@@ -1,0 +1,33 @@
+<p-card>
+  <ng-template>
+    pTemplate="header">
+    <h3>{{ "noteCard.noteTitle" | translate }}</h3>
+  </ng-template>
+  <p>
+    {{ "noteCard.content" | translate }}
+  </p>
+
+  <ng-template pTemplate="footer">
+    <div class="actions">
+      <button
+        pButton
+        icon="pi pi-pencil"
+        text
+        (click)="edit.emit(note.id)"
+      ></button>
+      <button
+        pButton
+        icon="pi pi-box"
+        text
+        (click)="archive.emit(note.id)"
+      ></button>
+      <button
+        pButton
+        icon="pi pi-trash"
+        severity="danger"
+        text
+        (click)="delete.emit(note.id)"
+      ></button>
+    </div>
+  </ng-template>
+</p-card>

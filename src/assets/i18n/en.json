@@ -1,0 +1,81 @@
+{
+  "common": {
+    "save": "Save"
+  },
+  "emptyState": {
+    "title": "No notes yet",
+    "description": "Create your first note to get started.",
+    "buttonLabel": "Create Note"
+  },
+  "errorState": {
+    "title": "Something went wrong",
+    "description": "We couldn't load your notes.",
+    "retry": "Try Again"
+  },
+  "entities": {
+    "note": "note",
+    "folder": "folder",
+    "user": "user"
+  },
+  "confirmation": {
+    "delete": {
+      "header": "Delete",
+      "message": "Are you sure you want to delete this {{entity}}?"
+    },
+    "logout": {
+      "header": "Logout",
+      "message": "Are you sure you want to logout?"
+    },
+    "archive": {
+      "header": "Archive",
+      "message": "Archive this note?"
+    },
+    "buttons": {
+      "yes": "Yes",
+      "no": "No",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "logout": "Logout"
+    }
+  },
+  "loginComponent": {
+    "welcomeBack": "Welcome Back 👋",
+    "loginToContinue": "Login to Continue",
+    "email": "Email",
+    "password": "Password",
+    "noAccount": "Don't have an account?",
+    "register": "Register",
+    "signUp": "Sign Up"
+  },
+  "registrationComponent": {
+    "register": "Register",
+    "name": "Name",
+    "password": "Password",
+    "email": "Email",
+    "alreadyUser": "Existing User?",
+    "login": "Login"
+  },
+  "layoutComponent": {
+    "dashboardLayout": {},
+    "sidebarComponent": {
+      "notes": "Notes",
+      "dashboard": "Dashboard",
+      "myNotes": "My Notes",
+      "archive": "Archive",
+      "trash": "Trash"
+    },
+    "navBarComponent": {
+      "navHeading": "Notes Sharing Application",
+      "searchNotes": "Search Notes..."
+    }
+  },
+  "noteToolBar": {
+    "heading": "My Notes",
+    "searchNotes": "Search Notes...",
+    "newNote": "New Note"
+  },
+  "noteCard": {
+    "noteTitle": "Title",
+    "content": "Content"
+  }
+}

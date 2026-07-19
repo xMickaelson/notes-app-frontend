@@ -1,0 +1,23 @@
+<div class="toolbar">
+  <div class="left">
+    <h2>{{ "noteToolBar.heading" | translate }}</h2>
+  </div>
+
+  <div class="right">
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input
+        pInputText
+        [formControl]="searchControl"
+        placeholder="Search notes..."
+      />
+    </span>
+
+    <button
+      pButton
+      [label]="'noteToolBar.newNote' | translate"
+      icon="pi pi-plus"
+      (click)="createClicked.emit()"
+    ></button>
+  </div>
+</div>

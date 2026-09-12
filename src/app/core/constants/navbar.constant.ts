@@ -1,7 +1,7 @@
 import { icon } from '@primeuix/themes/aura/avatar';
 import { AppRoutes } from '../enums/app-routes.enum';
 import { AppIcons } from '../enums/icons.enums';
-import { NavBar } from '../enums/navbar.enum';
+import { NavBar, NavBarSort } from '../enums/navbar.enum';
 
 export const NAVBAR_MENU = {
   PROFILE: {
@@ -13,4 +13,22 @@ export const NAVBAR_MENU = {
     label: NavBar.LOGOUT,
     icon: AppIcons.SignOut,
   },
+  SORT_OPTIONS: [
+    {
+      label: NavBarSort.NewestFirstLabel,
+      value: NavBarSort.NewestFirstValue,
+    },
+    {
+      label: NavBarSort.OldestFirstLabel,
+      value: NavBarSort.OldestFirstValue,
+    },
+    {
+      label: NavBarSort.TitleAscLabel,
+      value: NavBarSort.TitleAscValue,
+    },
+    {
+      label: NavBarSort.TitleDescLabel,
+      value: NavBarSort.TitleDescValue,
+    },
+  ],
 } as const;

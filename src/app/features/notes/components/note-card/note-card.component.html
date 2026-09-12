@@ -1,33 +1,79 @@
-<p-card>
-  <ng-template>
-    pTemplate="header">
-    <h3>{{ "noteCard.noteTitle" | translate }}</h3>
-  </ng-template>
-  <p>
-    {{ "noteCard.content" | translate }}
-  </p>
+<p-card class="note-card">
+  <!-- Note Content -->
+  <div class="note-content">
+    <h3>{{ note.title }}</h3>
 
-  <ng-template pTemplate="footer">
-    <div class="actions">
+    <p>
+      {{ note.content }}
+    </p>
+
+    <!-- Tags -->
+    @if (note.tags && note.tags.length > 0) {
+      <div class="tags">
+        @for (tag of note.tags; track tag.id) {
+          <p-chip [label]="tag.name"></p-chip>
+        }
+      </div>
+    }
+
+    <!-- Permission for shared notes -->
+    @if (isShared && note.permission) {
+      <div class="permission">
+        <p-chip
+          [label]="note.permission === 'EDIT' ? 'Can edit' : 'View only'"
+        ></p-chip>
+      </div>
+    }
+  </div>
+
+  <!-- Actions -->
+  <div class="note-actions">
+    <!-- Edit -->
+    @if (!isShared || note.permission === "EDIT") {
       <button
         pButton
+        type="button"
         icon="pi pi-pencil"
+        severity="success"
         text
         (click)="edit.emit(note.id)"
       ></button>
+    }
+
+    <!-- Archive - owner only -->
+    @if (!isShared) {
       <button
         pButton
+        type="button"
         icon="pi pi-box"
+        severity="success"
         text
         (click)="archive.emit(note.id)"
       ></button>
+    }
+
+    <!-- Delete - owner only -->
+    @if (!isShared) {
       <button
         pButton
+        type="button"
         icon="pi pi-trash"
         severity="danger"
         text
         (click)="delete.emit(note.id)"
       ></button>
-    </div>
-  </ng-template>
+    }
+
+    <!-- Share - owner only -->
+    @if (!isShared) {
+      <button
+        pButton
+        type="button"
+        icon="pi pi-share-alt"
+        severity="info"
+        text
+        (click)="share.emit(note.id)"
+      ></button>
+    }
+  </div>
 </p-card>

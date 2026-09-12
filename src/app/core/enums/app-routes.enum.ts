@@ -5,4 +5,5 @@ export enum AppRoutes {
   Trash = '/app/trash',
   Profile = '/app/profile',
   Login = '/login',
+  Share = '/app/shared',
 }

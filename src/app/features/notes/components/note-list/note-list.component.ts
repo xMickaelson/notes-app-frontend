@@ -15,6 +15,11 @@ import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ErrorStateComponent } from '../../../../shared/components/error-state/error-state.component';
+import { NoteSearchFilter } from '../../models/note-search-filter';
+import { Paginator, PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { SaveNoteEvent } from '../../models/save-note-event';
+import { ShareNoteComponent } from '../share-note/share-note.component';
+import { ShareNoteRequest } from '../../models/note-share.model';
 
 @Component({
   selector: 'app-note-list',
@@ -23,19 +28,29 @@ import { ErrorStateComponent } from '../../../../shared/components/error-state/e
     NoteGridComponent,
     NoteDialogComponent,
     EmptyStateComponent,
-    NoteSkeletonComponent,
-    TranslatePipe,
-    ErrorStateComponent,
+    Paginator,
+    PaginatorModule,
+    ShareNoteComponent,
   ],
   templateUrl: './note-list.component.html',
   styleUrl: './note-list.component.scss',
 })
 export class NoteListComponent {
-  notes: Note[] = [];
+  myNotes: Note[] = [];
+  sharedNotes: Note[] = [];
   loading = false;
   hasError = false;
   dialogVisible = false;
   selectedNote: Note | null = null;
+  totalElements: number = 0;
+  totalPages: number = 0;
+
+  searchFilter: NoteSearchFilter = {
+    page: 0,
+    size: 10,
+    search: '',
+    sort: 'updatedAt,desc',
+  };
 
   private noteService = inject(NoteService);
   private toastService = inject(ToastService);
@@ -44,67 +59,86 @@ export class NoteListComponent {
   private destroyRef = inject(DestroyRef);
   searchControl = new FormControl('', { nonNullable: true });
 
+  shareDialogVisible: boolean = false;
+  shareNoteId: number | null = null;
+
   ngOnInit(): void {
     this.loadNotes();
+    this.loadSharedNotes();
     this.listenForSearch();
   }
 
   loadNotes(): void {
     this.loading = true;
     this.hasError = false;
-    this.noteService.getNotes().subscribe({
+
+    this.noteService.getNotes(this.searchFilter).subscribe({
       next: (response) => {
-        this.notes = response;
+        this.myNotes = response.content;
+
+        this.searchFilter.page = response.page;
+        this.searchFilter.size = response.size;
+
+        this.totalElements = response.totalElements;
+        this.totalPages = response.totalPages;
+
         this.loading = false;
       },
-      error: (error) => {
+      error: () => {
         this.loading = false;
         this.hasError = true;
       },
     });
   }
-  //api is bringing data not populating in UI
+
+  loadSharedNotes(): void {
+    this.noteService.getSharedNotes().subscribe({
+      next: (response) => {
+        this.sharedNotes = response;
+      },
+      error: (error) => {
+        console.error('Failed to load shared notes', error);
+      },
+    });
+  }
+
   private listenForSearch(): void {
     this.searchControl.valueChanges
       .pipe(
         debounceTime(300),
         distinctUntilChanged(),
-
-        tap(() => {
-          this.loading = true;
-          this.hasError = true;
-        }),
-
-        switchMap((search) => this.noteService.getNotes(search)),
         takeUntilDestroyed(this.destroyRef),
       )
-      .subscribe({
-        next: (notes) => {
-          this.notes = notes;
-          this.loading = false;
-          this.loadNotes();
-        },
-        error: () => {
-          this.loading = false;
-          this.hasError = true;
-        },
+      .subscribe((search) => {
+        this.searchFilter.search = search ?? '';
+        this.searchFilter.page = 0;
+
+        this.loadNotes();
       });
   }
 
-  saveNote(request: CreateNoteRequest) {
-    if (this.selectedNote) {
-      this.noteService
-        .updateNote(this.selectedNote.id, request)
-        .subscribe(() => {
+  saveNote(event: SaveNoteEvent): void {
+    const { request, tagIds } = event;
+
+    const save$ = this.selectedNote
+      ? this.noteService.updateNote(this.selectedNote.id, request)
+      : this.noteService.createNote(request);
+
+    save$
+      .pipe(
+        switchMap((note) => {
+          return this.noteService.updateTags(note.id, tagIds);
+        }),
+      )
+      .subscribe({
+        next: (updatedNote) => {
           this.dialogVisible = false;
           this.loadNotes();
-        });
-    } else {
-      this.noteService.createNote(request).subscribe(() => {
-        this.dialogVisible = false;
-        this.loadNotes();
+        },
+        error: (error) => {
+          this.hasError = true;
+        },
       });
-    }
   }
 
   openCreateDialog(): void {
@@ -113,7 +147,7 @@ export class NoteListComponent {
   }
 
   editNote(id: number): void {
-    this.selectedNote = this.notes.find((note) => note.id === id) ?? null;
+    this.selectedNote = this.myNotes.find((note) => note.id === id) ?? null;
     this.dialogVisible = true;
   }
 
@@ -146,10 +180,53 @@ export class NoteListComponent {
   }
 
   archiveNote(id: number): void {
-    // this.noteService(id).subscribe({
-    //   next: () => {
-    //     this.loadNotes();
-    //   },
-    // });
+    this.confirmationService.confirm({
+      header: 'Archive Note',
+      message: 'Archive this Note',
+      accept: () => {
+        this.noteService.archiveNote(id).subscribe({
+          next: () => {
+            this.toastService.success(
+              'Archived',
+              'Note archived successfully.',
+            );
+            this.loadNotes();
+          },
+        });
+      },
+    });
+    1;
+  }
+
+  onPageChange(event: PaginatorState): void {
+    this.searchFilter.page = event.page ?? 0;
+    this.searchFilter.size = event.rows ?? 0;
+
+    this.loadNotes();
+  }
+
+  onSortChanged(sort: string): void {
+    this.searchFilter.sort = sort;
+    this.searchFilter.page = 0;
+    this.loadNotes();
+  }
+
+  openShareDialog(noteId: number): void {
+    this.shareNoteId = noteId;
+    this.shareDialogVisible = true;
+  }
+
+  shareNote(request: ShareNoteRequest): void {
+    if (this.shareNoteId === null) {
+      return;
+    }
+    this.noteService.shareNote(this.shareNoteId, request).subscribe({
+      next: () => {
+        this.shareDialogVisible = false;
+      },
+      error: (error) => {
+        console.error('Failed to share note', error);
+      },
+    });
   }
 }

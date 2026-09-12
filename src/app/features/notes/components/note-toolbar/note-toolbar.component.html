@@ -13,6 +13,15 @@
       />
     </span>
 
+    <p-select
+      [options]="sortOptions"
+      optionLabel="label"
+      optionValue="value"
+      [(ngModel)]="selectedSort"
+      (onChange)="onSortChange()"
+    >
+    </p-select>
+
     <button
       pButton
       [label]="'noteToolBar.newNote' | translate"

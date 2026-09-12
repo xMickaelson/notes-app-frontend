@@ -1,44 +1,58 @@
 <app-note-toolbar
   [searchControl]="searchControl"
   (createClicked)="openCreateDialog()"
->
-</app-note-toolbar>
+  (sortChanged)="onSortChanged($event)"
+></app-note-toolbar>
 
 @if (loading) {
-  <div class="grid">
-    @for (i of [1, 2, 3, 4, 5, 6]; track i) {
-      <app-note-skeleton />
-    }
+  <div class="loading-container">
+    <i class="pi pi-spin pi-spinner"></i>
+    <p>Loading notes...</p>
   </div>
-} @else if (hasError) {
-  <app-error-state
-    [title]="'errorState.title' | translate"
-    [description]="'errorState.description' | translate"
-    [buttonLabel]="'errorState.retry' | translate"
-    (retry)="loadNotes()"
-  >
-  </app-error-state>
-} @else if (notes.length === 0) {
-  <app-empty-state
-    [title]="'emptyState.title' | translate"
-    [description]="'emptyState.description' | translate"
-    [buttonLabel]="'emptyState.buttonLabel' | translate"
-    (action)="openCreateDialog()"
-  >
-  </app-empty-state>
+} @else if (myNotes.length === 0 && sharedNotes.length === 0) {
+  <app-empty-state></app-empty-state>
 } @else {
-  <app-note-grid
-    [notes]="notes"
-    (edit)="editNote($event)"
-    (delete)="deleteNote($event)"
-    (archive)="archiveNote($event)"
-  >
-  </app-note-grid>
+  @if (myNotes.length > 0) {
+    <section class="notes-section">
+      <h2>My Notes</h2>
+
+      <app-note-grid
+        [notes]="myNotes"
+        (edit)="editNote($event)"
+        (delete)="deleteNote($event)"
+        (archive)="archiveNote($event)"
+        (share)="openShareDialog($event)"
+      ></app-note-grid>
+    </section>
+
+    @if (!loading && myNotes.length > 0) {
+      <p-paginator
+        [first]="searchFilter.page * searchFilter.size"
+        [rows]="searchFilter.size"
+        [totalRecords]="totalElements"
+        [rowsPerPageOptions]="[5, 10, 20]"
+        (onPageChange)="onPageChange($event)"
+      ></p-paginator>
+    }
+  }
+
+  @if (sharedNotes.length > 0) {
+    <section class="notes-section shared-section">
+      <h2>Shared with me</h2>
+
+      <app-note-grid [notes]="sharedNotes"></app-note-grid>
+    </section>
+  }
 }
 
 <app-note-dialog
   [(visible)]="dialogVisible"
   [note]="selectedNote"
   (save)="saveNote($event)"
->
-</app-note-dialog>
+></app-note-dialog>
+
+<app-share-note
+  [(visible)]="shareDialogVisible"
+  [noteId]="shareNoteId"
+  (share)="shareNote($event)"
+></app-share-note>

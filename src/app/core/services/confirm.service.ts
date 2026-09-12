@@ -46,6 +46,26 @@ export class ConfirmService {
     });
   }
 
+  confirmArchive(
+    entity: string,
+    accept: () => void,
+    reject?: () => void,
+  ): void {
+    this.confirm({
+      header: this.translate.instant('confirmation.archive.header'),
+      message: this.translate.instant('confirmation.archive.message', {
+        entity,
+      }),
+      icon: 'pi pi-box',
+      acceptLabel: this.translate.instant('confirmation.buttons.archive'),
+      rejectLabel: this.translate.instant('confirmation.buttons.cancel'),
+      acceptButtonStyleClass: 'p-button-warning',
+      rejectButtonStyleClass: 'p-button-secondary',
+      accept,
+      reject,
+    });
+  }
+
   confirmLogout(accept: () => void, reject?: () => void): void {
     this.confirm({
       header: this.translate.instant('confirmation.logout.header'),

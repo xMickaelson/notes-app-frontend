@@ -1,3 +1,7 @@
+import { Tag } from '../../tag/models/tag.model';
+
+export type SharePermission = 'READ' | 'EDIT';
+
 export interface Note {
   id: number;
   title: string;
@@ -6,4 +10,6 @@ export interface Note {
   deleted: boolean;
   createdAt: string;
   updatedAt: string;
+  tags?: Tag[];
+  permission?: SharePermission;
 }

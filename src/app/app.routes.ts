@@ -74,6 +74,16 @@ export const routes: Routes = [
           breadcrumb: 'Trash',
         },
       },
+      {
+        path: 'shared',
+        loadComponent: () =>
+          import('./features/notes/components/share-note/share-note-list/share-note-list.component').then(
+            (m) => m.ShareNoteListComponent,
+          ),
+        data: {
+          breadcrumb: 'Shared',
+        },
+      },
     ],
   },
   // {

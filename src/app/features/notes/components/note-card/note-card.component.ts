@@ -3,10 +3,11 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { Note } from '../../models/note.model';
+import { ChipModule } from 'primeng/chip';
 
 @Component({
   selector: 'app-note-card',
-  imports: [TranslatePipe, CardModule, ButtonModule],
+  imports: [TranslatePipe, CardModule, ButtonModule, ChipModule],
   templateUrl: './note-card.component.html',
   styleUrl: './note-card.component.scss',
 })
@@ -22,4 +23,13 @@ export class NoteCardComponent {
 
   @Output()
   archive = new EventEmitter<number>();
+
+  @Output()
+  share = new EventEmitter<number>();
+
+  @Input()
+  permission?: 'READ' | 'EDIT';
+
+  @Input()
+  isShared = false;
 }

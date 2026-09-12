@@ -11,6 +11,32 @@
     </div>
 
     <div class="field">
+      <label for="tags">Tags</label>
+      <p-multiselect
+        formControlName="tags"
+        [options]="availableTags"
+        optionLabel="name"
+        display="chip"
+        placeholder="Select tags"
+        class="w-full"
+      />
+      <div class="flex gap-2 mt-2">
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="newTagName"
+          [ngModelOptions]="{ standalone: true }"
+          placeholder="New tag name"
+        />
+
+        <button
+          pButton
+          type="button"
+          label="Create"
+          [disabled]="!newTagName.trim() || creatingTag"
+          (click)="createTag()"
+        ></button>
+      </div>
       <label>Content</label>
       <textarea pTextarea rows="8" formControlName="content"></textarea>
     </div>

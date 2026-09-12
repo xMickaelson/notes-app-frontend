@@ -1,0 +1,266 @@
+:host {
+  display: block;
+}
+
+/* =========================================
+   Dialog
+   ========================================= */
+
+:host ::ng-deep .p-dialog {
+  width: 600px !important;
+  max-width: calc(100vw - 32px);
+
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+:host ::ng-deep .p-dialog-header {
+  padding: 24px 32px;
+
+  border-bottom: 1px solid #e5eaf0;
+}
+
+:host ::ng-deep .p-dialog-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #334155;
+}
+
+:host ::ng-deep .p-dialog-header-close {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 8px;
+
+  color: #64748b;
+}
+
+:host ::ng-deep .p-dialog-header-close:hover {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+/* =========================================
+   Dialog Content
+   ========================================= */
+
+:host ::ng-deep .p-dialog-content {
+  padding: 32px;
+}
+
+/* =========================================
+   Form
+   ========================================= */
+
+:host form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* =========================================
+   Form Groups
+   ========================================= */
+
+:host .flex.flex-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+:host label {
+  display: block;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  color: #475569;
+}
+
+/* =========================================
+   Email Input
+   ========================================= */
+
+:host ::ng-deep .p-inputtext {
+  width: 100%;
+  height: 44px;
+
+  padding: 0 14px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+
+  font-size: 15px;
+  color: #334155;
+}
+
+:host ::ng-deep .p-inputtext::placeholder {
+  color: #94a3b8;
+}
+
+:host ::ng-deep .p-inputtext:hover {
+  border-color: #94a3b8;
+}
+
+:host ::ng-deep .p-inputtext:focus {
+  border-color: #10b981;
+
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.12);
+}
+
+/* =========================================
+   Validation
+   ========================================= */
+
+:host small {
+  display: block;
+
+  margin-top: 4px;
+
+  font-size: 13px;
+  line-height: 1.3;
+
+  color: #ef4444;
+}
+
+/* =========================================
+   Permission Select
+   ========================================= */
+
+:host ::ng-deep .p-select {
+  width: 100%;
+  min-height: 44px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+
+:host ::ng-deep .p-select:hover {
+  border-color: #94a3b8;
+}
+
+:host ::ng-deep .p-select.p-focus {
+  border-color: #10b981;
+
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.12);
+}
+
+:host ::ng-deep .p-select-label {
+  font-size: 15px;
+  color: #334155;
+}
+
+/* =========================================
+   Footer
+   ========================================= */
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-top: 8px;
+  padding-top: 24px;
+
+  border-top: 1px solid #e5eaf0;
+}
+
+/* =========================================
+   Buttons
+   ========================================= */
+
+:host ::ng-deep .dialog-footer .p-button {
+  min-width: 100px !important;
+  height: 42px !important;
+
+  padding: 0 18px !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  box-sizing: border-box;
+
+  border-radius: 8px !important;
+
+  font-family: inherit !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+
+  line-height: 1 !important;
+
+  cursor: pointer;
+}
+
+/* =========================================
+   Cancel Button
+   ========================================= */
+
+:host ::ng-deep .dialog-footer .cancel-btn {
+  background: #ffffff !important;
+
+  border: 1px solid #cbd5e1 !important;
+
+  color: #475569 !important;
+}
+
+:host ::ng-deep .dialog-footer .cancel-btn:hover {
+  background: #f8fafc !important;
+
+  border-color: #94a3b8 !important;
+}
+
+/* =========================================
+   Share Button
+   ========================================= */
+
+:host ::ng-deep .dialog-footer .share-btn {
+  background: #10b981 !important;
+
+  border: 1px solid #10b981 !important;
+
+  color: #ffffff !important;
+}
+
+:host ::ng-deep .dialog-footer .share-btn:hover:not(:disabled) {
+  background: #059669 !important;
+
+  border-color: #059669 !important;
+}
+
+:host ::ng-deep .dialog-footer .share-btn:disabled {
+  opacity: 0.5 !important;
+
+  cursor: not-allowed;
+}
+
+/* =========================================
+   Mobile
+   ========================================= */
+
+@media (max-width: 600px) {
+  :host ::ng-deep .p-dialog {
+    width: calc(100vw - 32px) !important;
+  }
+
+  :host ::ng-deep .p-dialog-header {
+    padding: 20px;
+  }
+
+  :host ::ng-deep .p-dialog-content {
+    padding: 20px;
+  }
+
+  .dialog-footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  :host ::ng-deep .dialog-footer .p-button {
+    width: 100% !important;
+  }
+}

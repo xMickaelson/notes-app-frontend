@@ -2,9 +2,12 @@
   @for (note of notes; track note.id) {
     <app-note-card
       [note]="note"
+      [isShared]="isShared"
+      [permission]="note.permission"
       (edit)="edit.emit($event)"
       (delete)="delete.emit($event)"
       (archive)="archive.emit($event)"
+      (share)="share.emit($event)"
     ></app-note-card>
   }
 </div>

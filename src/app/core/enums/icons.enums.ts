@@ -6,4 +6,5 @@ export enum AppIcons {
   User = 'pi pi-user',
   SignOut = 'pi pi-sign-out',
   Plus = 'pi pi-plus',
+  Share = 'pi pi-share-alt',
 }

@@ -23,4 +23,9 @@ export const SIDEBAR_MENU_ITEMS: Readonly<MenuItem[]> = [
     icon: AppIcons.Trash,
     route: AppRoutes.Trash,
   },
+  {
+    label: 'Shared with Me',
+    icon: AppIcons.Share,
+    route: AppRoutes.Share,
+  },
 ] as const;

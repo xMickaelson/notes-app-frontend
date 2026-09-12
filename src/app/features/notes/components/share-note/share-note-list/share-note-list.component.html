@@ -1,0 +1,31 @@
+<app-note-toolbar
+  [searchControl]="searchControl"
+  (createClicked)="openCreateDialog()"
+  (sortChanged)="onSortChanged($event)"
+></app-note-toolbar>
+
+@if (loading) {
+  <div class="loading-container">
+    <i class="pi pi-spin pi-spinner"></i>
+    <p>Loading notes...</p>
+  </div>
+} @else if (sharedNotes.length === 0) {
+  <app-empty-state></app-empty-state>
+} @else {
+  @if (sharedNotes.length > 0) {
+    <section class="notes-section">
+      <h2>My Shared Notes</h2>
+
+      <app-note-grid
+        [notes]="sharedNotes"
+        [isShared]="true"
+        (edit)="editNote($event)"
+      ></app-note-grid>
+    </section>
+  }
+}
+
+<app-note-dialog
+  [(visible)]="dialogVisible"
+  [note]="selectedNote"
+></app-note-dialog>

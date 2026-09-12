@@ -1,0 +1,52 @@
+<p-dialog
+  header="ShareNote"
+  [modal]="true"
+  [visible]="visible"
+  (visibleChange)="visibleChange.emit($event)"
+  [style]="{ width: '450px' }"
+>
+  <form [formGroup]="form" (ngSubmit)="onShare()" class="flex flex-col gap-4">
+    <div class="flex flex-col gap-2">
+      <label for="email">User Email</label>
+
+      <input
+        id="email"
+        type="email"
+        pInputText
+        formControlName="email"
+        placeholder="user@example.com"
+      />
+
+      @if (form.controls.email.invalid && form.controls.email.touched) {
+        <small>Enter a valid email address</small>
+      }
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="permission"> Permission </label>
+      <p-select
+        id="permission"
+        [options]="permissions"
+        formControlName="permission"
+        placeholder="Select permission"
+      >
+      </p-select>
+    </div>
+
+    <div class="dialog-footer">
+      <button
+        pButton
+        type="button"
+        severity="secondary"
+        class="cancel-btn"
+        (click)="close()"
+      >
+        Cancel
+      </button>
+
+      <button pButton type="submit" class="share-btn" [disabled]="form.invalid">
+        Share
+      </button>
+    </div>
+  </form>
+</p-dialog>
